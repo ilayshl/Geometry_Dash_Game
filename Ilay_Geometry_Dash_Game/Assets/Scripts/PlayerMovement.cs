@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 10f;
     [SerializeField] float jumpForce = 25f;
     [SerializeField] float jumpTimeFullCharge = 0.5f;
+    [SerializeField] float rotationStregth = 300f;
     [SerializeField] ParticleSystem halfChargeParticle;
     [SerializeField] ParticleSystem fullChargeParticle;
     bool isJumping=false;
@@ -23,21 +24,19 @@ public class PlayerMovement : MonoBehaviour
     {
         gameObject.transform.position+=Vector3.right*moveSpeed*Time.deltaTime;
         if(isJumping==true) {
-            rbPlayer.transform.Rotate(Vector3.back*2*gravityScale);
+            rbPlayer.transform.Rotate(Vector3.back*rotationStregth*gravityScale*Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.UpArrow) ||Input.GetKey(KeyCode.W)) {
             if(isJumping==false) {
             if(jumpTimer<jumpTimeFullCharge) {
             jumpTimer+=Time.deltaTime;
-            Debug.Log("Jump timer is "+jumpTimer);
             }
             if(jumpTimer>(jumpTimeFullCharge/2) && halfChargeParticle.isPlaying==false && jumpTimer<jumpTimeFullCharge) {
                     halfChargeParticle.Play();
                 }
             if(jumpTimer>jumpTimeFullCharge){
                     jumpTimer=jumpTimeFullCharge;
-                    Debug.Log("Jump timer reset to "+jumpTimer);
                     fullChargeParticle.Play();
                 }
             }

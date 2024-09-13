@@ -261,6 +261,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -3803232891654030720, guid: 7445fc9e0a77ff14a88ee2a6aca0ad0b, type: 3}
+      propertyPath: m_Time
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: -3803232891654030720, guid: 7445fc9e0a77ff14a88ee2a6aca0ad0b, type: 3}
       propertyPath: m_Parameters.colorGradient.ctime0
       value: 0
       objectReference: {fileID: 0}
@@ -349,6 +353,10 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6879726561997928859, guid: 7445fc9e0a77ff14a88ee2a6aca0ad0b, type: 3}
+      propertyPath: rotationStregth
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6879726561997928859, guid: 7445fc9e0a77ff14a88ee2a6aca0ad0b, type: 3}
       propertyPath: fullChargeParticle
       value: 
       objectReference: {fileID: 1321223190}
@@ -356,6 +364,18 @@ PrefabInstance:
       propertyPath: halfChargeParticle
       value: 
       objectReference: {fileID: 1677298479}
+    - target: {fileID: 7896952187099578900, guid: 7445fc9e0a77ff14a88ee2a6aca0ad0b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896952187099578900, guid: 7445fc9e0a77ff14a88ee2a6aca0ad0b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896952187099578900, guid: 7445fc9e0a77ff14a88ee2a6aca0ad0b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7896952187099578900, guid: 7445fc9e0a77ff14a88ee2a6aca0ad0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.48262545
@@ -5611,7 +5631,7 @@ GameObject:
   - component: {fileID: 1623477073}
   - component: {fileID: 1623477072}
   m_Layer: 0
-  m_Name: Floor (1)
+  m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
