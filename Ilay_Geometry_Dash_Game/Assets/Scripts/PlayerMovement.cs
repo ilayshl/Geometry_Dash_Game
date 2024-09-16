@@ -22,10 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        gameObject.transform.position+=Vector3.right*moveSpeed*Time.deltaTime;
-        if(isJumping==true) {
-            rbPlayer.transform.Rotate(Vector3.back*rotationStregth*gravityScale*Time.deltaTime);
-        }
+        PlayerBasicMovement();
 
         if (Input.GetKey(KeyCode.UpArrow) ||Input.GetKey(KeyCode.W)) {
             if(isJumping==false) {
@@ -43,10 +40,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.Space) && isJumping==false) {
-            rbPlayer.velocity=Vector2.zero;
-            gravityScale*=-1;
-            rbPlayer.gravityScale*=-1;
-            isJumping=true;
+            SwitchGravity();
         }
 
         if(Input.GetKeyUp(KeyCode.UpArrow)||Input.GetKeyUp(KeyCode.W)) {
@@ -69,15 +63,33 @@ public class PlayerMovement : MonoBehaviour
         }
         }
 
+        void PlayerBasicMovement(){
+            gameObject.transform.position+=Vector3.right*moveSpeed*Time.deltaTime;
+        if(isJumping==true) {
+            rbPlayer.transform.Rotate(Vector3.back*rotationStregth*gravityScale*Time.deltaTime);
+        }
+        }
+
+        void SwitchGravity(){
+            rbPlayer.velocity=Vector2.zero;
+            gravityScale*=-1;
+            rbPlayer.gravityScale*=-1;
+            isJumping=true;
+        }
+
 
         void OnCollisionEnter2D(Collision2D collision) {
+            CollisionWithGround(collision);
+        }
+
+        void CollisionWithGround(Collision2D ground){
+            if(ground.gameObject.CompareTag("Ground")){
             if(isJumping==true) {
                 isJumping=false;
             Vector3 rotation = transform.rotation.eulerAngles;
             rotation.z=Mathf.Round(rotation.z/90)*90;
-            transform.rotation=Quaternion.Euler(rotation);
-                Debug.Log("Landed");
-            }
+            transform.rotation=Quaternion.Euler(rotation); 
+            }}
         }
 
 }
