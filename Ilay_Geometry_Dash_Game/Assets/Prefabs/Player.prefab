@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2831585482714216561}
   - component: {fileID: 3043212007687058121}
   - component: {fileID: -3803232891654030720}
+  - component: {fileID: 3864962090771534098}
+  - component: {fileID: 211919734885900214}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -220,7 +222,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.35
+  m_Time: 0.25
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -251,18 +253,18 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.8773585, g: 0.7510582, b: 0.25244746, a: 1}
-      key1: {r: 0.15566039, g: 0.4785977, b: 1, a: 1}
+      key0: {r: 0.23113209, g: 0.53124017, b: 1, a: 1}
+      key1: {r: 0.9528302, g: 0.681097, b: 0.112362035, a: 1}
       key2: {r: 0.6320754, g: 0.100662, b: 0.068574235, a: 0}
-      key3: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0.6320754, g: 0.100662, b: 0.068574235, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 32189
+      ctime1: 31997
       ctime2: 65535
-      ctime3: 0
+      ctime3: 65535
       ctime4: 0
       ctime5: 0
       ctime6: 0
@@ -291,3 +293,27 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &3864962090771534098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3268057368106298598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06eae2c01c2851c4ab26bbd2160f4cee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &211919734885900214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3268057368106298598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b1dc262f39aa245a1281f010633fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

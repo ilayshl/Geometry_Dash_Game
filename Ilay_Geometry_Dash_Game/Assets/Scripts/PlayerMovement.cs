@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public float difficultyTimer = 1;
+    public bool isRunning = true;
     public float moveSpeed = 10f;
     [SerializeField] float jumpForce = 25f;
     [SerializeField] float jumpTimeFullCharge = 0.5f;
-    [SerializeField] float rotationStregth = 300f;
+    [SerializeField] float rotationStregth = 400f;
     [SerializeField] ParticleSystem halfChargeParticle;
     [SerializeField] ParticleSystem fullChargeParticle;
     bool isJumping=false;
     Rigidbody2D rbPlayer;
     float jumpTimer;
-    int gravityScale = 1;
+    int gravityDirection = 1;
 
     void Start()
     {
@@ -22,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.S)) {
+            isRunning=!isRunning;
+        }
+        if(isRunning==false){ return; }
+
         PlayerBasicMovement();
 
         if (Input.GetKey(KeyCode.UpArrow) ||Input.GetKey(KeyCode.W)) {
@@ -48,14 +55,11 @@ public class PlayerMovement : MonoBehaviour
                 isJumping=true;
                 rbPlayer.velocity=Vector2.zero;
                     if(jumpTimer==jumpTimeFullCharge) {
-                        rbPlayer.AddForce(Vector2.up*jumpForce*1.5f*gravityScale, ForceMode2D.Impulse);
-                    Debug.Log($"Jumped for {jumpForce*1.5f} units");
+                        rbPlayer.AddForce(Vector2.up*jumpForce*1.5f*gravityDirection, ForceMode2D.Impulse);
                 } else if(jumpTimer>=(jumpTimeFullCharge/2)) {
-                        rbPlayer.AddForce(Vector2.up*jumpForce*1.2f*gravityScale, ForceMode2D.Impulse);
-                    Debug.Log($"Jumped for {jumpForce*1.2f} units");
+                        rbPlayer.AddForce(Vector2.up*jumpForce*1.2f*gravityDirection, ForceMode2D.Impulse);
                 } else if(jumpTimer<(jumpTimeFullCharge/2)) {
-                        rbPlayer.AddForce(Vector2.up*jumpForce*gravityScale, ForceMode2D.Impulse);
-                    Debug.Log($"Jumped for {jumpForce} units");
+                        rbPlayer.AddForce(Vector2.up*jumpForce*gravityDirection, ForceMode2D.Impulse);
                 }
                 
                 jumpTimer=0;
@@ -64,15 +68,15 @@ public class PlayerMovement : MonoBehaviour
         }
 
         void PlayerBasicMovement(){
-            gameObject.transform.position+=Vector3.right*moveSpeed*Time.deltaTime;
+            gameObject.transform.position+=Vector3.right*moveSpeed*difficultyTimer*Time.deltaTime;
         if(isJumping==true) {
-            rbPlayer.transform.Rotate(Vector3.back*rotationStregth*gravityScale*Time.deltaTime);
+            rbPlayer.transform.Rotate(Vector3.back*rotationStregth*gravityDirection*Time.deltaTime);
         }
         }
 
         void SwitchGravity(){
             rbPlayer.velocity=Vector2.zero;
-            gravityScale*=-1;
+            gravityDirection*=-1;
             rbPlayer.gravityScale*=-1;
             isJumping=true;
         }
@@ -86,10 +90,13 @@ public class PlayerMovement : MonoBehaviour
             if(ground.gameObject.CompareTag("Ground")){
             if(isJumping==true) {
                 isJumping=false;
+            GetComponent<Rigidbody2D>().angularVelocity=0;
             Vector3 rotation = transform.rotation.eulerAngles;
             rotation.z=Mathf.Round(rotation.z/90)*90;
             transform.rotation=Quaternion.Euler(rotation); 
             }}
         }
+
+    
 
 }
