@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObstacleHandler : MonoBehaviour
@@ -10,7 +8,7 @@ public class ObstacleHandler : MonoBehaviour
 
     void Start()
     {
-        activeObstacle = obstacleList[Random.Range(0, obstacleList.Length)];
+        activeObstacle = obstacleList[0];
         player=GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
@@ -21,8 +19,17 @@ public class ObstacleHandler : MonoBehaviour
         }
     }
 
-    public void RenewObstacle() {
+    public void RenewActiveObstacle() {
+        activeObstacle.transform.position=new Vector3(player.position.x+40, 5, 0);
+    }
+
+    void RenewObstacle() {
         activeObstacle=obstacleList[Random.Range(0, obstacleList.Length)];
-        activeObstacle.transform.position=new Vector3(player.position.x+20, 0, 0);
+        int verticalDirection = Random.Range(0, 1);
+        if(verticalDirection == 0) {
+            Transform activeTransform = activeObstacle.transform;
+            activeTransform.localScale=new Vector3(activeTransform.localScale.x, activeTransform.localScale.y*-1, activeTransform.localScale.z);
+        }
+        activeObstacle.transform.position=new Vector3(player.position.x+30, 5,  0);
     }
 }

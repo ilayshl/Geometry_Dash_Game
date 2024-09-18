@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScoreHandler : MonoBehaviour
 {
-    private float timer;
+    public float timer;
     private PlayerMovement playerMovementScript;
     private Rigidbody2D rbPlayer;
     private int currentTimePrevention;
@@ -20,10 +17,9 @@ public class ScoreHandler : MonoBehaviour
         if(playerMovementScript.isRunning==true) {
             timer+=Time.deltaTime*100;
             timer=Mathf.Round(timer);
-            if(timer%100==0) {
+            if(timer%100==0 && timer!=0) {
                 if(timer!=currentTimePrevention){
-                    Debug.Log(timer/100);
-                    IncreaseDifficulty(0.0125f);
+                    IncreaseDifficulty(0.025f);
                     currentTimePrevention=(int) timer;
                 }
             }
@@ -31,7 +27,7 @@ public class ScoreHandler : MonoBehaviour
     }
     void IncreaseDifficulty(float additiveAmount) {
         playerMovementScript.difficultyTimer+=additiveAmount;
-        if(rbPlayer.gravityScale>0) {
+     if(rbPlayer.gravityScale>0) {
             rbPlayer.gravityScale=rbPlayer.gravityScale+additiveAmount;
         } else {
             rbPlayer.gravityScale=rbPlayer.gravityScale-additiveAmount;
@@ -39,7 +35,13 @@ public class ScoreHandler : MonoBehaviour
     }
 
     public void ResetTimer() {
-        playerMovementScript.isRunning=false;
         timer=0;
+        playerMovementScript.difficultyTimer=1;
+        currentTimePrevention=0;
+        if(rbPlayer.gravityScale>0) {
+          rbPlayer.gravityScale=12;
+         } else {
+         rbPlayer.gravityScale=-12;
+               }
     }
 }

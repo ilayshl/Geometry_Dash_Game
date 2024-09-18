@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -11,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationStregth = 400f;
     [SerializeField] ParticleSystem halfChargeParticle;
     [SerializeField] ParticleSystem fullChargeParticle;
+    [SerializeField] ParticleSystem deathParticle;
+    [SerializeField] Sprite sprite;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip jumpAudio;
     bool isJumping=false;
     Rigidbody2D rbPlayer;
     float jumpTimer;
@@ -24,9 +27,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.S)) {
-            isRunning=!isRunning;
-        }
         if(isRunning==false){ return; }
 
         PlayerBasicMovement();
@@ -46,25 +46,31 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && isJumping==false) {
-            SwitchGravity();
-        }
-
         if(Input.GetKeyUp(KeyCode.UpArrow)||Input.GetKeyUp(KeyCode.W)) {
             if(isJumping==false) {
                 isJumping=true;
                 rbPlayer.velocity=Vector2.zero;
                     if(jumpTimer==jumpTimeFullCharge) {
                         rbPlayer.AddForce(Vector2.up*jumpForce*1.5f*gravityDirection, ForceMode2D.Impulse);
+                    audioSource.pitch=1f;
+                    audioSource.PlayOneShot(jumpAudio);
                 } else if(jumpTimer>=(jumpTimeFullCharge/2)) {
                         rbPlayer.AddForce(Vector2.up*jumpForce*1.2f*gravityDirection, ForceMode2D.Impulse);
+                    audioSource.pitch=0.85f;
+                    audioSource.PlayOneShot(jumpAudio);
                 } else if(jumpTimer<(jumpTimeFullCharge/2)) {
                         rbPlayer.AddForce(Vector2.up*jumpForce*gravityDirection, ForceMode2D.Impulse);
+                    audioSource.pitch=0.75f;
+                    audioSource.PlayOneShot(jumpAudio);
                 }
-                
                 jumpTimer=0;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Space)&&isJumping==false) {
+            SwitchGravity();
+        }
+
         }
 
         void PlayerBasicMovement(){
@@ -97,6 +103,26 @@ public class PlayerMovement : MonoBehaviour
             }}
         }
 
-    
-
+    public void StopPlayerMovement() {
+        if(isRunning==true){
+            Debug.Log($"You died! Your score is: {GetComponent<ScoreHandler>().timer}");
+            isRunning=false;
+        deathParticle.transform.position=transform.position;
+            GetComponent<SpriteRenderer>().sprite=null;
+            GetComponent<Rigidbody2D>().velocity=Vector3.zero;
+            GetComponent<Rigidbody2D>().isKinematic=true;
+        deathParticle.Play();
+        Invoke("PlayerRespawn", 3);
+        }
+    }
+    public void PlayerRespawn() {
+        if(isRunning==false){
+        transform.position= new Vector3(transform.position.x, 5, transform.position.z);
+        isRunning=true;
+            GetComponent<SpriteRenderer>().sprite=sprite;
+            GetComponent<Rigidbody2D>().isKinematic=false;
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<ObstacleHandler>().RenewActiveObstacle();
+        GetComponent<ScoreHandler>().ResetTimer();
+        }
+    }
 }
