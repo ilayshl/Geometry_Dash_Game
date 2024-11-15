@@ -1,2 +1,2 @@
 # Geometry_Dash_Game
- my homework
+a little project based on Geometry Dash, trying to break down its physics and mechanics to make them myself.
